@@ -1,0 +1,666 @@
+:root {
+    font-family: "Segoe UI Variable", "Segoe UI", "Microsoft YaHei UI", sans-serif;
+    color: #202a3b;
+    background: #f2f4f7;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-optical-sizing: auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body, #app {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    min-width: 600px;
+}
+
+button {
+    font: inherit;
+}
+
+button:focus-visible {
+    outline: 3px solid #8bb5ff;
+    outline-offset: 2px;
+}
+
+.app-shell {
+    position: relative;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    min-height: 0;
+    grid-template-rows: 58px minmax(0, 1fr) 30px;
+    overflow: hidden;
+    background: #f2f4f7;
+}
+
+.print-panel {
+    position: absolute;
+    top: 12px;
+    right: 24px;
+    bottom: 12px;
+    z-index: 3;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    overflow-y: auto;
+    border: 1px solid #dfe3ea;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 24px #1c2a4326;
+    font-size: 13px;
+}
+
+@media screen {
+    .preview-section .preview-scroll {
+        right: 330px;
+    }
+}
+
+.print-panel h2 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.print-panel label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: #53647f;
+}
+
+.print-panel select, .print-panel input {
+    padding: 7px 8px;
+    border: 1px solid #cfd6e1;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.print-panel .print-note {
+    color: #828c9c;
+    font-size: 12px;
+}
+
+.print-busy {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 8px;
+    color: #53647f;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.print-panel-actions button {
+    flex: 1;
+}
+
+.print-panel-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+.toolbar {
+    z-index: 1;
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 16px;
+    padding: 0 20px;
+    border-bottom: 1px solid #e5e8ee;
+    background: #fff;
+}
+
+.status-bar {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 18px;
+    padding: 0 20px;
+    border-top: 1px solid #e2e6ed;
+    background: #fff;
+    color: #828c9c;
+    font-size: 10px;
+}
+
+.status-bar a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.status-bar a:hover {
+    color: #5169be;
+    text-decoration: underline;
+}
+
+.button {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+.button:not(:disabled):active {
+    transform: translateY(1px);
+}
+
+.button-open {
+    height: 35px;
+    padding: 0 12px;
+    border: 1px solid #dce2ec;
+    background: #fff;
+    color: #354157;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.button-open:not(:disabled):hover, .button-secondary:not(:disabled):hover {
+    background: #f6f8fc;
+}
+
+.button-icon {
+    color: #5875df;
+    font-size: 17px;
+    line-height: 1;
+}
+
+.document-name {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 9px;
+}
+
+.file-type-icon {
+    display: grid;
+    width: 27px;
+    height: 29px;
+    flex: 0 0 27px;
+    place-items: center;
+    border-radius: 5px;
+    background: #fff0ef;
+    color: #d76159;
+    font-size: 8px;
+    font-weight: 700;
+}
+
+.file-name {
+    overflow: hidden;
+    color: #39455a;
+    font-size: 11px;
+    font-weight: 550;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.document-pages, .document-placeholder {
+    flex: 0 0 auto;
+    color: #929bab;
+    font-size: 10px;
+}
+
+.toolbar-actions, .zoom-actions, .page-navigation {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 22px;
+    margin: 0 4px;
+    background: #e7eaf0;
+}
+
+.icon-button {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    flex: 0 0 27px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid #e5e9f0;
+    border-radius: 6px;
+    background: #fff;
+    color: #53647f;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.icon-button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.zoom-value {
+    width: 34px;
+    color: #667389;
+    text-align: center;
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+}
+
+.page-count {
+    min-width: 44px;
+    margin: 0 3px;
+    color: #8490a0;
+    text-align: right;
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+}
+
+.button-print {
+    height: 35px;
+    min-width: 78px;
+    padding: 0 13px;
+    background: #273550;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.button-print:not(:disabled):hover {
+    background: #364968;
+}
+
+.print-icon {
+    font-size: 15px;
+}
+
+.error-card {
+    position: absolute;
+    top: 58px;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 16px;
+    border-bottom: 1px solid #f2d5d2;
+    background: #fff8f7;
+    color: #a6443b;
+    font-size: 10px;
+}
+
+.error-icon {
+    display: grid;
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    place-items: center;
+    border-radius: 50%;
+    background: #fce6e3;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.error-card > span:nth-child(2) {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow-wrap: anywhere;
+}
+
+.error-dismiss {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #a6443b;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.preview-section {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: #f1f3f6;
+}
+
+.preview-scroll {
+    position: absolute;
+    inset: 0;
+    min-width: 0;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    overscroll-behavior: contain;
+    padding: 22px 24px 30px;
+    scrollbar-gutter: stable;
+}
+
+.preview-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.preview-scroll::-webkit-scrollbar-track {
+    border-left: 1px solid #e2e6ee;
+    background: #e9edf3;
+}
+
+.preview-scroll::-webkit-scrollbar-thumb {
+    min-height: 32px;
+    border: 3px solid #e9edf3;
+    border-radius: 8px;
+    background: #bbc4d2;
+}
+
+.preview-scroll::-webkit-scrollbar-thumb:hover {
+    background: #8f9bae;
+}
+
+.pdf-pages {
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.welcome-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 17px;
+    transform: translate(-50%, -50%);
+}
+
+.welcome-art {
+    position: relative;
+    width: 72px;
+    height: 82px;
+    margin-bottom: 2px;
+}
+
+.art-sheet {
+    position: absolute;
+    width: 53px;
+    height: 70px;
+    border-radius: 6px;
+}
+
+.art-sheet-back {
+    top: 5px;
+    left: 17px;
+    transform: rotate(8deg);
+    background: #dfe5f3;
+}
+
+.art-sheet-front {
+    top: 5px;
+    left: 4px;
+    padding: 11px 8px;
+    transform: rotate(-7deg);
+    border: 1px solid #e3e7ef;
+    background: #fff;
+    box-shadow: 0 6px 12px #31456613;
+}
+
+.art-pdf {
+    display: block;
+    margin-bottom: 7px;
+    color: #d96560;
+    font-size: 7px;
+    font-weight: 700;
+}
+
+.art-line {
+    display: block;
+    width: 26px;
+    height: 3px;
+    margin: 4px 0;
+    border-radius: 2px;
+    background: #e9edf3;
+}
+
+.art-line-long { width: 36px; }
+.art-line-short { width: 19px; }
+
+.button-secondary {
+    min-height: 34px;
+    padding: 0 14px;
+    border: 1px solid #dce2ec;
+    background: #fff;
+    color: #5169be;
+    font-size: 10px;
+    font-weight: 550;
+}
+
+.pdf-page {
+    position: relative;
+    flex: 0 0 auto;
+    overflow: hidden;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 3px 12px #26365424, 0 0 0 1px #dce1e9;
+}
+
+.pdf-canvas {
+    display: block;
+    background: #fff;
+}
+
+.pdf-print-image {
+    display: none;
+}
+
+#print-root {
+    display: none;
+}
+
+.pdf-page-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 4px 8px;
+    transform: translateY(100%);
+    background: #192238b8;
+    color: #fff;
+    text-align: center;
+    font-size: 9px;
+    transition: transform .12s ease;
+}
+
+.pdf-page:hover .pdf-page-caption {
+    transform: translateY(0);
+}
+
+.render-error {
+    width: min(100%, 600px);
+    padding: 12px;
+    border: 1px solid #f2d5d2;
+    border-radius: 8px;
+    background: #fff8f7;
+    color: #a6443b;
+    font-size: 10px;
+}
+
+.busy-overlay {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 12px;
+    border: 1px solid #e5eaf2;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 12px #24355412;
+    color: #69758a;
+    font-size: 10px;
+}
+
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #ffffff73;
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+.spinner-dark {
+    border-color: #dce3f3;
+    border-top-color: #5274e8;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#blazor-error-ui {
+    display: none;
+}
+
+@media (max-width: 760px) {
+    .toolbar {
+        gap: 9px;
+        padding: 0 10px;
+    }
+
+    .toolbar-actions {
+        gap: 4px;
+    }
+
+    .document-pages, .toolbar-divider {
+        display: none;
+    }
+
+    .button-open, .button-print {
+        padding: 0 9px;
+    }
+
+    .preview-scroll {
+        padding: 14px 12px 20px;
+    }
+}
+
+@media print {
+    @page {
+        margin: 0;
+        size: auto;
+    }
+
+    html, body, #app {
+        display: block !important;
+        width: auto !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .toolbar, .status-bar, .error-card, .welcome-card, .pdf-page-caption, .busy-overlay, .print-panel {
+        display: none !important;
+    }
+
+    .pdf-pages {
+        display: block !important;
+    }
+
+    .pdf-page {
+        display: block !important;
+        position: relative !important;
+        width: 100% !important;
+        height: 100vh !important;
+        max-width: none !important;
+        aspect-ratio: auto !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        break-inside: avoid !important;
+        break-after: page;
+        page-break-after: always;
+        border-radius: 0 !important;
+    }
+
+    .pdf-page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .pdf-canvas {
+        display: none !important;
+    }
+
+    .app-shell {
+        display: none !important;
+    }
+
+    #print-root {
+        display: block !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    .print-sheet {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .print-sheet:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .pdf-print-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+    }
+
+    html.print-mono .pdf-print-image {
+        filter: grayscale(1);
+    }
+}
